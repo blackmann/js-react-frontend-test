@@ -58,6 +58,8 @@ In this test, you're required to regroup the schedule activities based on the fo
     - Activity ...
     - Activity ...
 
+![Preview of results](public/preview.png)
+
 ## References:
 
 MDN: https://developer.mozilla.org/en-US/
