@@ -54,11 +54,7 @@ function App() {
     );
   }, []);
 
-  console.log(
-    activities.map(
-      (a) => new Date(a.startTime).getTime() > nextWeekEnd.getTime()
-    )
-  );
+  console.log(futureActivities);
 
   return (
     <div className="container p-3">
@@ -68,56 +64,59 @@ function App() {
           <ol className="list-unstyled">
             <h2 className="fs-6">Today</h2>
             <hr />
-            {todaysActivities.map((activity) => (
-              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
-                <header>{activity.title}</header>
-                <small className="text-muted">
-                  {dayjs(activity.startTime).format("D MMM [at] H:mm")} •{" "}
-                  {activity.instructor}
-                </small>
-              </li>
-            ))}
+            {todaysActivities.length > 0 &&
+              todaysActivities.map((activity) => (
+                <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
+                  <header>{activity.title}</header>
+                  <small className="text-muted">
+                    {dayjs(activity.startTime).format("D MMM [at] H:mm")} •{" "}
+                    {activity.instructor}
+                  </small>
+                </li>
+              ))}
             <hr />
           </ol>
           <ol className="list-unstyled">
             <h2 className="fs-6">Tomorrow</h2>
             <hr />
-            {tomorrowsActivities.map((activity) => (
-              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
-                <header>{activity.title}</header>
-                <small className="text-muted">
-                  {dayjs(activity.startTime).format("D MMM [at] H:mm")} •{" "}
-                  {activity.instructor}
-                </small>
-              </li>
-            ))}
+            {tomorrowsActivities.length > 0 &&
+              tomorrowsActivities.map((activity) => (
+                <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
+                  <header>{activity.title}</header>
+                  <small className="text-muted">
+                    {dayjs(activity.startTime).format("D MMM [at] H:mm")} •{" "}
+                    {activity.instructor}
+                  </small>
+                </li>
+              ))}
             <hr />
           </ol>
           <ol>
             <h2 className="fs-6">Next week</h2>
             <hr />
-            {nextWeekActivities.map((activity) => (
-              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
-                <header>{activity.title}</header>
-                <small className="text-muted">
-                  {dayjs(activity.startTime).format("ddd, MMM DD  ")} •{" "}
-                  {activity.instructor}
-                </small>
-              </li>
-            ))}
+            {nextWeekActivities.length > 0 &&
+              nextWeekActivities.map((activity) => (
+                <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
+                  <header>{activity.title}</header>
+                  <small className="text-muted">
+                    {dayjs(activity.startTime).format("ddd, MMM DD  ")} •{" "}
+                    {activity.instructor}
+                  </small>
+                </li>
+              ))}
           </ol>
           <ol>
             <h2 className="fs-6">In future</h2>
             <hr />
-            {futureActivities.map((activity) => {
-              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
-                <header>{activity.title}</header>
-                <small className="text-muted">
-                  {dayjs(activity.startTime).format("ddd, MMM DD  ")} •{" "}
-                  {activity.instructor}
-                </small>
-              </li>;
-            })}
+            {futureActivities.length > 0 &&
+              futureActivities.slice(0, 5).map((act) => (
+                <li className="hover-light-bg p-2 rounded-2" key={act.id}>
+                  <small className="text-muted">
+                    {dayjs(act.startTime).format("ddd, MMM DD  ")} •{" "}
+                    {act.instructor}
+                  </small>
+                </li>
+              ))}
           </ol>
         </div>
       </div>
