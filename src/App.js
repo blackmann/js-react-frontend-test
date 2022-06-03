@@ -6,7 +6,7 @@ import { useState } from "react";
 function SortedActivityListComponent({
   activityList,
   title,
-  isFutureActivities,
+  disableDay,
 }) {
   if (activityList.length !== 0) {
     return (
@@ -14,12 +14,11 @@ function SortedActivityListComponent({
         <h3>{title}</h3>
         <ol className="list-unstyled">
           {activityList.map((activity) => {
-            const activitiesDay = dayjs(activity.startTime).day();
             return (
               <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
                 <header>{activity.title}</header>
                 <small className="text-muted">
-                  {isFutureActivities
+                  {disableDay
                     ? dayjs(activity.startTime).format("D MMM [at] H:mm")
                     : dayjs(activity.startTime).format(
                         "ddd[,] D MMM [at] H:mm"
@@ -99,10 +98,12 @@ function App() {
           <SortedActivityListComponent
             activityList={todaysActivityList}
             title="Today"
+            disableDay={true}
           />
           <SortedActivityListComponent
             activityList={tomorrowsActivityList}
             title="Tomorrow"
+            disableDay={true}
           />
           <SortedActivityListComponent
             activityList={restOfWeekActivityList}
@@ -115,7 +116,7 @@ function App() {
           <SortedActivityListComponent
             activityList={futureActivityList}
             title="In future..."
-            isFutureActivities={true}
+            disableDay={true}
           />
         </div>
       </div>
