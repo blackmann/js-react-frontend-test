@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "title": "Principles of GLSL shaders",
+    "startTime": "2022-06-03T10:30:00.000Z",
+    "instructor": "Patricio Gonzalez"
+  },
+  {
+    "id": 2,
+    "title": "Lights and Illumination. Bounces and Approximations.",
+    "startTime": "2022-06-03T12:00:00.000Z",
+    "instructor": "Not Gr"
+  },
+  {
+    "id": 3,
+    "title": "Environmental-maps (spherical and cube)",
+    "startTime": "2022-06-04T07:15:00.000Z",
+    "instructor": "Patricio Gonzalez"
+  },
+  {
+    "id": 4,
+    "title": "The Inconsistency of Arithmetic",
+    "startTime": "2022-06-06T10:30:00.000Z",
+    "instructor": "John Baez"
+  },
+  {
+    "id": 5,
+    "title": "Basic Theory of Physically-Based Rendering",
+    "startTime": "2022-06-07T11:30:00.000Z",
+    "instructor": "Jeff Russell"
+  },
+  {
+    "id": 6,
+    "title": "Painting a Landscape with Maths",
+    "startTime": "2022-06-07T15:00:00.000Z",
+    "instructor": "Inigo Quilez"
+  },
+  {
+    "id": 7,
+    "title": "Building an Interactive Sparkline Graph with D3",
+    "startTime": "2022-06-07T18:45:00.000Z",
+    "instructor": "Michelle Barker"
+  },
+  {
+    "id": 8,
+    "title": "Building a Scrollable and Draggable Timeline with GSAP",
+    "startTime": "2022-06-08T12:30:00.000Z",
+    "instructor": "Michelle Barker"
+  },
+  {
+    "id": 9,
+    "title": "Superhero Animation Effect with SVG Filters",
+    "startTime": "2022-06-09T09:15:00.000Z",
+    "instructor": "Abner Nascimento"
+  },
+  {
+    "id": 10,
+    "title": "How to Create Motion Hover Effects with Image Distortions using Three.js",
+    "startTime": "2022-06-12T10:30:00.000Z",
+    "instructor": "Niccolò Miranda and Clément Roche"
+  },
+  {
+    "id": 11,
+    "title": "Code structuring for bigger projects",
+    "startTime": "2022-06-19T04:30:00.000Z",
+    "instructor": "Bruno Simon"
+  },
+  {
+    "id": 12,
+    "title": "Mixing HTML and WebGL",
+    "startTime": "2022-06-19T18:30:00.000Z",
+    "instructor": "Bruno Simon"
+  },
+  {
+    "id": 13,
+    "title": "Object Oriented Thinking",
+    "startTime": "2022-06-20T10:30:00.000Z",
+    "instructor": "Not Gr"
+  },
+  {
+    "id": 14,
+    "title": "Building an awesome image loading experience",
+    "startTime": "2022-06-27T10:30:00.000Z",
+    "instructor": "Kent C Dodds"
+  },
+  {
+    "id": 15,
+    "title": "Stripe's model of product-led, developer-centric growth.",
+    "startTime": "2022-06-28T10:30:00.000Z",
+    "instructor": "Will Larson"
+  },
+  {
+    "id": 16,
+    "title": "Lights and Illumination. Bounces and Approximations II",
+    "startTime": "2022-07-01T10:30:00.000Z",
+    "instructor": "Not Gr"
+  },
+  {
+    "id": 17,
+    "title": "Static vs Unit vs Integration vs E2E Testing for Frontend Apps",
+    "startTime": "2022-07-01T13:00:00.000Z",
+    "instructor": "Kent C Dodds"
+  },
+  {
+    "id": 18,
+    "title": "Getting started with git-scraping",
+    "startTime": "2022-07-02T10:30:00.000Z",
+    "instructor": "Will Larson"
+  }
+]

@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# js-react-frontend-test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In this test, you're required to regroup the schedule activities based on the following criteria:
 
-## Available Scripts
+- Group events for the current week. Separate the activities under following titles
+    - Today
+    - Tomorrow
+    - The rest should follow the format like: Thu, May 30, Fri, May 31, ... until the week ends. Rely on `dayjs` to help
+      get end of week (based on locale).
 
-In the project directory, you can run:
+  _For activities in this group, only show the time (with the instructor) in the footer._
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Group events for the following (1) week with the title "Next week"
+    - Show the day, date and instructor (Mon, May 5 • Instructor)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+- Group events for the rest of the days after the following week all into one.
+    - Show just date and instructor
+    - Only display up to 5 activities (if even activities under this are more than 5)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+- Only display a group of activities when there's at least one activity in it.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Only activities from today onwards are provided. _Do not worry about yesterday_.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- NOTE: All activities have to be sorted in ascending order
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Expected grouping visualization
 
-### `npm run eject`
+- Today
+    - Activity 1
+    - Activity 2
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Tomorrow
+    - Activity 3
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Fri, 30 May
+    - Activity 4
+    - Activity 5
+    - Activity 6
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Sun, 1 Jun
+    - Activity 7
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+- Next week
+    - Activity 8
+    - Activity 9
+    - Activity 10
+    - Activity 11
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+- In future <- Here goes the rest
+    - Activity ...
+    - Activity ...
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## References:
 
-### Making a Progressive Web App
+MDN: https://developer.mozilla.org/en-US/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+React: https://reactjs.org
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Dayjs: https://day.js.org/docs/en/
