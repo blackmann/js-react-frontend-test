@@ -1,3 +1,7 @@
 .hover-light-bg:hover {
-    background: #eee;
+  background: #eee;
+}
+
+ul {
+  list-style: none;
 }

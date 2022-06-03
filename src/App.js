@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 function App() {
   const today = new Date();
-  var tomorrow = new Date(today + 1);
-  tomorrow.setDate(new Date().getDate() + 1);
+  var tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
   const lastDay = new Date(
     new Date().setDate(new Date().getDate() - new Date().getDay() + 6)
   );
@@ -18,6 +18,9 @@ function App() {
 
   const [todaysActivities, setTodaysActivities] = useState([]);
   const [tomorrowsActivities, setTomorrowsActivities] = useState([]);
+  const [restofFirstWeekActivities, setRestofFirstWeekActivities] = useState(
+    []
+  );
   const [nextWeekActivities, setNextWeekActivities] = useState([]);
   const [futureActivities, setFutureActivities] = useState([]);
 
@@ -31,11 +34,20 @@ function App() {
           dayjs(today.toISOString()).format("d MMM")
       )
     );
+
     setTomorrowsActivities(
       activities.filter(
         (a) =>
           dayjs(a.startTime).format("d MMM") ===
           dayjs(tomorrow.toISOString()).format("d MMM")
+      )
+    );
+
+    setRestofFirstWeekActivities(
+      activities.filter(
+        (a) =>
+          new Date(a.startTime).getTime() > tomorrow.getTime() &&
+          new Date(a.startTime).getTime() < lastDay.getTime()
       )
     );
 
@@ -54,14 +66,14 @@ function App() {
     );
   }, []);
 
-  console.log(futureActivities);
+  console.log(restofFirstWeekActivities);
 
   return (
     <div className="container p-3">
       <h1 className="mb-5">Schedule</h1>
       <div className="row">
         <div className="col-lg-6 col-md-8">
-          <ol className="list-unstyled">
+          <ul className="list-unstyled">
             <h2 className="fs-6">Today</h2>
             <hr />
             {todaysActivities.length > 0 &&
@@ -74,9 +86,8 @@ function App() {
                   </small>
                 </li>
               ))}
-            <hr />
-          </ol>
-          <ol className="list-unstyled">
+          </ul>
+          <ul className="list-unstyled">
             <h2 className="fs-6">Tomorrow</h2>
             <hr />
             {tomorrowsActivities.length > 0 &&
@@ -89,9 +100,24 @@ function App() {
                   </small>
                 </li>
               ))}
-            <hr />
-          </ol>
-          <ol>
+          </ul>
+          {restofFirstWeekActivities.length > 0 &&
+            restofFirstWeekActivities.map((activity) => (
+              <ul className="list-unstyled">
+                <h2 className="fs-6">
+                  {dayjs(activity.startTime).format("ddd, MMM DD  ")} •{" "}
+                </h2>
+                <hr />
+                <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
+                  <header>{activity.title}</header>
+                  <small className="text-muted">
+                    {dayjs(activity.startTime).format("D MMM [at] H:mm")} •{" "}
+                    {activity.instructor}
+                  </small>
+                </li>
+              </ul>
+            ))}
+          <ul className="list-unstyled">
             <h2 className="fs-6">Next week</h2>
             <hr />
             {nextWeekActivities.length > 0 &&
@@ -104,8 +130,8 @@ function App() {
                   </small>
                 </li>
               ))}
-          </ol>
-          <ol>
+          </ul>
+          <ul className="list-unstyled">
             <h2 className="fs-6">In future</h2>
             <hr />
             {futureActivities.length > 0 &&
@@ -117,7 +143,7 @@ function App() {
                   </small>
                 </li>
               ))}
-          </ol>
+          </ul>
         </div>
       </div>
     </div>
