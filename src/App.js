@@ -19,7 +19,7 @@ function App() {
   const [todaysActivities, setTodaysActivities] = useState([]);
   const [tomorrowsActivities, setTomorrowsActivities] = useState([]);
   const [nextWeekActivities, setNextWeekActivities] = useState([]);
-  const [restOfActivities, setRestOfActivities] = useState([]);
+  const [futureActivities, setFutureActivities] = useState([]);
 
   // const firstDay = new Date(today.setDate(today.getDate() - today.getDay()));
 
@@ -46,9 +46,19 @@ function App() {
           new Date(a.startTime).getTime() < nextWeekEnd.getTime()
       )
     );
+
+    setFutureActivities(
+      activities.filter(
+        (a) => new Date(a.startTime).getTime() > nextWeekEnd.getTime()
+      )
+    );
   }, []);
 
-  console.log(nextWeekEnd);
+  console.log(
+    activities.map(
+      (a) => new Date(a.startTime).getTime() > nextWeekEnd.getTime()
+    )
+  );
 
   return (
     <div className="container p-3">
@@ -85,6 +95,7 @@ function App() {
           </ol>
           <ol>
             <h2 className="fs-6">Next week</h2>
+            <hr />
             {nextWeekActivities.map((activity) => (
               <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
                 <header>{activity.title}</header>
@@ -94,6 +105,19 @@ function App() {
                 </small>
               </li>
             ))}
+          </ol>
+          <ol>
+            <h2 className="fs-6">In future</h2>
+            <hr />
+            {futureActivities.map((activity) => {
+              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
+                <header>{activity.title}</header>
+                <small className="text-muted">
+                  {dayjs(activity.startTime).format("ddd, MMM DD  ")} •{" "}
+                  {activity.instructor}
+                </small>
+              </li>;
+            })}
           </ol>
         </div>
       </div>
