@@ -10,6 +10,12 @@ function App() {
     new Date().setDate(new Date().getDate() - new Date().getDay() + 6)
   );
 
+  var nextWeekBegin = new Date(lastDay + 1);
+  nextWeekBegin.setDate(lastDay.getDate() + 1);
+
+  var nextWeekEnd = new Date(lastDay + 1);
+  nextWeekEnd.setDate(nextWeekBegin.getDate() + 6);
+
   const [todaysActivities, setTodaysActivities] = useState([]);
   const [tomorrowsActivities, setTomorrowsActivities] = useState([]);
   const [nextWeekActivities, setNextWeekActivities] = useState([]);
@@ -35,12 +41,14 @@ function App() {
 
     setNextWeekActivities(
       activities.filter(
-        (a) => new Date(a.startTime).getTime() > lastDay.getTime()
+        (a) =>
+          new Date(a.startTime).getTime() > lastDay.getTime() &&
+          new Date(a.startTime).getTime() < nextWeekEnd.getTime()
       )
     );
   }, []);
 
-  console.log(nextWeekActivities);
+  console.log(nextWeekEnd);
 
   return (
     <div className="container p-3">
@@ -74,6 +82,18 @@ function App() {
               </li>
             ))}
             <hr />
+          </ol>
+          <ol>
+            <h2 className="fs-6">Next week</h2>
+            {nextWeekActivities.map((activity) => (
+              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
+                <header>{activity.title}</header>
+                <small className="text-muted">
+                  {dayjs(activity.startTime).format("ddd, MMM DD  ")} •{" "}
+                  {activity.instructor}
+                </small>
+              </li>
+            ))}
           </ol>
         </div>
       </div>
