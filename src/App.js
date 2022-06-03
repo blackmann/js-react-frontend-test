@@ -3,21 +3,27 @@ import dayjs from "dayjs";
 import { useEffect } from "react";
 import { useState } from "react";
 
-function SortedActivityListComponent({ activityList, title }) {
+function SortedActivityListComponent({
+  activityList,
+  title,
+  isFutureActivities,
+}) {
   if (activityList.length !== 0) {
     return (
       <div>
         <h3>{title}</h3>
         <ol className="list-unstyled">
           {activityList.map((activity) => {
+            const activitiesDay = dayjs(activity.startTime).day();
             return (
               <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
                 <header>{activity.title}</header>
                 <small className="text-muted">
-                  {dayjs(activity.startTime).format("D MMM [at} H:mm") >
-                  dayjs().add(14, "day").format("D MMM [at]H:mm")
-                    ? dayjs(activity.startTime).format("ddd[,] D MMM [at] H:mm")
-                    : dayjs(activity.startTime).format("D MMM [at] H:mm")}{" "}
+                  {isFutureActivities
+                    ? dayjs(activity.startTime).format("D MMM [at] H:mm")
+                    : dayjs(activity.startTime).format(
+                        "ddd[,] D MMM [at] H:mm"
+                      )}{" "}
                   • {activity.instructor}
                 </small>
               </li>
@@ -109,6 +115,7 @@ function App() {
           <SortedActivityListComponent
             activityList={futureActivityList}
             title="In future..."
+            isFutureActivities={true}
           />
         </div>
       </div>
