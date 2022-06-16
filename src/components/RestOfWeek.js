@@ -10,6 +10,9 @@ const RestOfWeek = ({ activities, dateSet }) => {
       </div>
     );
   }
+  else{
+    return <div></div>
+  }
 };
 
 export default RestOfWeek;

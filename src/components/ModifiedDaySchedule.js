@@ -1,22 +1,21 @@
 import React from "react";
-import { formatDate } from "../helper functions/dateFormat";
 import dayjs from "dayjs";
 
 const ModifiedDaySchedule = ({ date, activities }) => {
-  var dateDet = new Date(date);
+   date = dayjs(date);
   return (
     <div className="col-lg-6 col-md-8">
       <h2 className="fs-6">
-        {dateDet.toLocaleString("default", { weekday: "short" }) +
+        {date.format('ddd') +
           " " +
-          dateDet.getDate() +
+          date.date() +
           " " +
-          dateDet.toLocaleString("default", { month: "short" })}
+          date.format('MMM')}
       </h2>
-      <ol>
+      <ol  className="list-unstyled">
         {activities.map((activity) => {
           const { id, title, startTime, instructor } = activity;
-          if (formatDate(dateDet) === formatDate(new Date(startTime))) {
+          if(dayjs(date).format("MDYYYY") === dayjs(startTime).format("MDYYYY")) {
             return (
               <li className="hober-light0bg p-2 rounded-2" key={id}>
                 <header>{title}</header>

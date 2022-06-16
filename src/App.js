@@ -1,21 +1,17 @@
 import activities from "./resources/schedule.json";
 import CurrentWeek from "./components/CurrentWeek";
-import { formatDate } from "./helper functions/dateFormat";
 import ListedActivities from "./components/ListedActivities";
+import { useMemo } from "react";
+import dayjs from "dayjs";
 
 function App() {
-  const today = formatDate(new Date());
-  var tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  var remDays = 6 - tomorrow.getDay();
-  var currentWeekStart = new Date();
-  var currentWeekEnd = new Date();
-  var nextWeekStart = new Date();
-  var nextWeekEnd = new Date();
-  currentWeekStart.setDate(tomorrow.getDate() + 1);
-  currentWeekEnd.setDate(tomorrow.getDate() + remDays);
-  nextWeekStart.setDate(currentWeekEnd.getDate() + 1);
-  nextWeekEnd.setDate(nextWeekStart.getDate() + 6);
+  const today = dayjs().format("MDYYYY");
+  var tomorrow = dayjs().add(1,'day');
+  var remDays = 6 - tomorrow.day();
+  var currentWeekStart = dayjs().add(2,'day');
+  var currentWeekEnd = dayjs().add(remDays+1,'day');
+  var nextWeekStart = currentWeekEnd.add(1,'day');
+  var nextWeekEnd = nextWeekStart.add(6,'day');
 
   var sortedSchedule = {
     past: [],
@@ -26,8 +22,8 @@ function App() {
     future: [],
   };
   var sortSchedule = (activities) => {
-    activities.map((activity) => {
-      var formatedDate = formatDate(new Date(activity.startTime));
+    activities.forEach((activity) => {
+      var formatedDate = dayjs(activity.startTime).format("MDYYYY");
       switch (true) {
         case formatedDate < today:
           sortedSchedule.past.push(activity);
@@ -35,15 +31,15 @@ function App() {
         case formatedDate === today:
           sortedSchedule.today.push(activity);
           break;
-        case formatedDate === formatDate(tomorrow):
+        case formatedDate === dayjs(tomorrow).format("MDYYYY"):
           sortedSchedule.tomorrow.push(activity);
           break;
-        case formatedDate >= formatDate(currentWeekStart) &&
-          formatedDate <= formatDate(currentWeekEnd):
+        case formatedDate >= dayjs(currentWeekStart).format("MDYYYY") &&
+          formatedDate <= dayjs(currentWeekEnd).format("MDYYYY"):
           sortedSchedule.currentWeek.push(activity);
           break;
-        case formatedDate >= formatDate(nextWeekStart) &&
-          formatedDate <= formatDate(nextWeekEnd):
+        case formatedDate >= dayjs(nextWeekStart).format("MDYYYY") &&
+          formatedDate <= dayjs(nextWeekEnd).format("MDYYYY"):
           sortedSchedule.nextWeek.push(activity);
           break;
         default:
@@ -54,7 +50,8 @@ function App() {
     });
    
   };
-  sortSchedule(activities);
+ useMemo(()=>sortSchedule(activities),[activities]);
+ console.log();
 
   return (
     <div className="container p-3">
