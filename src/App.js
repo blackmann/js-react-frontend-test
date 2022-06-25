@@ -1,60 +1,75 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import activities from './resources/schedule.json';
 import dayjs from 'dayjs';
+var utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
 
 function App() {
   const [today, setToday] = useState([]);
   const [tomorrow, setTomorrow] = useState([]);
+  const [restOfWeek, setRestOfWeek] = useState([]);
   const [nextWeek, setNextWeek] = useState([]);
   const [future, setFuture] = useState([]);
 
-  const todayDate = new Date();
-  let tomorrowDate = new Date();
-  tomorrowDate.setDate(todayDate.getDate() + 1);
-  const thisWeekEnds = new Date();
-  thisWeekEnds.setDate(todayDate.getDate() + 2);
+  //   set today's date
+  let todayDate = dayjs.utc().local().format('YYYY-MM-DD');
+  //   set tomorrow's date
+  let tomorrowDate = dayjs.utc().local().add(1, 'day').format('YYYY-MM-DD');
+  //   set end of this week's date
+  let endOfWeekDate = dayjs.utc().endOf('week').format('YYYY-MM-DD');
+  //   set start of next week's date
+  let startOfNextWeekDate = dayjs
+    .utc()
+    .startOf('week')
+    .add(1, 'week')
+    .format('YYYY-MM-DD');
+  let endOfNextWeekDate = dayjs
+    //   set end of next week's date
 
-  let nextWeekStart = new Date(thisWeekEnds + 3);
-  nextWeekStart.setDate(thisWeekEnds.getDate() + 1);
-  // console.log(nextWeekStart);
-
-  let nextWeekEnd = new Date(thisWeekEnds + 1);
-  nextWeekEnd.setDate(nextWeekStart.getDate() + 6);
+    .utc()
+    .endOf('week')
+    .add(1, 'week')
+    .format('YYYY-MM-DD');
 
   useEffect(() => {
     setToday(
       activities.filter(
         (activity) =>
-          dayjs(activity.startTime).format('d MMM') ===
-          dayjs(todayDate.toISOString()).format('d MMM')
+          dayjs(activity.startTime).format('YYYY-MM-DD') === todayDate
       )
     );
     setTomorrow(
       activities.filter(
         (activity) =>
-          dayjs(activity.startTime).format('d MMM') ===
-          dayjs(tomorrowDate.toISOString()).format('d MMM')
+          dayjs(activity.startTime).format('YYYY-MM-DD') === tomorrowDate
       )
     );
+    if (nextWeek) {
+      setNextWeek(
+        activities.filter(
+          (activity) =>
+            dayjs(activity.startTime).format('YYYY-MM-DD') >=
+              startOfNextWeekDate &&
+            dayjs(activity.startTime).format('YYYY-MM-DD') <= endOfNextWeekDate
+        )
+      );
+    }
     setFuture(
       activities.filter(
-        (activity) => new Date(activity.startTime).getTime() > nextWeekEnd
+        (activity) =>
+          dayjs(activity.startTime).format('YYYY-MM-DD') > endOfNextWeekDate
       )
     );
-    setNextWeek(
+    setRestOfWeek(
       activities.filter(
         (activity) =>
-          new Date(activity.startTime).getTime() > thisWeekEnds.getTime() &&
-          new Date(activity.startTime).getTime() < nextWeekEnd.getTime()
+          dayjs(activity.startTime).format('YYYY-MM-DD') > tomorrowDate &&
+          dayjs(activity.startTime).format('YYYY-MM-DD') < endOfWeekDate
       )
     );
   }, []);
-
-  console.log(todayDate.toString());
-  // console.log(tomorrowDate);
-  // console.log(thisWeekEnds);
-  // console.log(nextWeekStart);
-  // console.log(nextWeekEnd);
+  //   console.log(nextWeek);
+  // console.log(restOfWeek);
 
   return (
     <div className='container p-3'>
@@ -79,9 +94,9 @@ function App() {
                   </li>
                 );
               })}
+            <hr />
           </ul>
           <ul className='list-unstyled'>
-            <hr />
             <h5>Tomorrow</h5>
             {tomorrow &&
               tomorrow.map((activity) => {
@@ -98,9 +113,31 @@ function App() {
                   </li>
                 );
               })}
-          </ul>
-          <ul className='list-unstyled'>
             <hr />
+          </ul>
+
+          <ul className='list-unstyled'>
+            {restOfWeek &&
+              restOfWeek.map((activity) => {
+                return (
+                  <div key={activity.id}>
+                    <h5>
+                      {dayjs(activity.startTime).format('ddd[,] MMMM DD')}
+                    </h5>
+                    <li className='hover-light-bg p-2 rounded-2'>
+                      <header>{activity.title}</header>
+                      <small className='text-muted'>
+                        {dayjs(activity.startTime).format('D MMM [at] H:mm')} •{' '}
+                        {activity.instructor}
+                      </small>
+                    </li>
+                    <hr />
+                  </div>
+                );
+              })}
+          </ul>
+
+          <ul className='list-unstyled'>
             <h5>Next week</h5>
             {nextWeek &&
               nextWeek.map((activity) => {
@@ -117,9 +154,9 @@ function App() {
                   </li>
                 );
               })}
+            <hr />
           </ul>
           <ul className='list-unstyled'>
-            <hr />
             <h5>In future...</h5>
             {future &&
               future.map((activity) => {
@@ -136,6 +173,7 @@ function App() {
                   </li>
                 );
               })}
+            <hr />
           </ul>
         </div>
       </div>
