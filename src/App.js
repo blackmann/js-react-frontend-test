@@ -86,8 +86,8 @@ function App() {
       dayjs(activity.startTime).format('YYYY-MM-DD') !==
         dayjs(first[0].startTime).format('YYYY-MM-DD')
   );
-  console.log(third);
-  console.log(restOfWeek);
+  // console.log(third);
+  // console.log(restOfWeek);
   // console.log(second);
   return (
     <div className='container p-3'>
@@ -157,7 +157,7 @@ function App() {
               ''
             )}
 
-            {second ? (
+            {second.length > 0 ? (
               <div>
                 <h5>{dayjs(second[0].startTime).format('ddd[,] MMMM DD')}</h5>
                 {second.map((activity) => {
@@ -179,7 +179,7 @@ function App() {
             )}
 
             <hr />
-            {third ? (
+            {third.length > 0 ? (
               <div>
                 <h5>{dayjs(third[0].startTime).format('ddd[,] MMMM DD')}</h5>
                 {third.map((activity) => {
@@ -225,7 +225,7 @@ function App() {
           <ul className='list-unstyled'>
             <h5>In future...</h5>
             {future &&
-              future.map((activity) => {
+              future.slice(0, 5).map((activity) => {
                 return (
                   <li
                     className='hover-light-bg p-2 rounded-2'
