@@ -68,9 +68,27 @@ function App() {
       )
     );
   }, []);
-  //   console.log(nextWeek);
-  // console.log(restOfWeek);
 
+  const first = restOfWeek.filter(
+    (activity) =>
+      dayjs(activity.startTime).format('YYYY-MM-DD') ===
+      dayjs(restOfWeek[0].startTime).format('YYYY-MM-DD')
+  );
+  const second = restOfWeek.filter(
+    (activity) =>
+      dayjs(activity.startTime).format('YYYY-MM-DD') ===
+      dayjs(restOfWeek[1].startTime).format('YYYY-MM-DD')
+  );
+  const third = restOfWeek.filter(
+    (activity) =>
+      dayjs(activity.startTime).format('YYYY-MM-DD') !==
+        dayjs(second[0].startTime).format('YYYY-MM-DD') &&
+      dayjs(activity.startTime).format('YYYY-MM-DD') !==
+        dayjs(first[0].startTime).format('YYYY-MM-DD')
+  );
+  console.log(third);
+  console.log(restOfWeek);
+  // console.log(second);
   return (
     <div className='container p-3'>
       <h1 className='mb-5'>Schedule</h1>
@@ -117,24 +135,72 @@ function App() {
           </ul>
 
           <ul className='list-unstyled'>
-            {restOfWeek &&
-              restOfWeek.map((activity) => {
-                return (
-                  <div key={activity.id}>
-                    <h5>
-                      {dayjs(activity.startTime).format('ddd[,] MMMM DD')}
-                    </h5>
-                    <li className='hover-light-bg p-2 rounded-2'>
-                      <header>{activity.title}</header>
-                      <small className='text-muted'>
-                        {dayjs(activity.startTime).format('D MMM [at] H:mm')} •{' '}
-                        {activity.instructor}
-                      </small>
-                    </li>
-                    <hr />
-                  </div>
-                );
-              })}
+            {first.length > 0 ? (
+              <>
+                <h5>{dayjs(first[0].startTime).format('ddd[,] MMMM DD')}</h5>
+                {first.map((activity) => {
+                  return (
+                    <div key={activity.id}>
+                      <li className='hover-light-bg p-2 rounded-2'>
+                        <header>{activity.title}</header>
+                        <small className='text-muted'>
+                          {dayjs(activity.startTime).format('D MMM [at] H:mm')}{' '}
+                          • {activity.instructor}
+                        </small>
+                      </li>
+                    </div>
+                  );
+                })}
+                <hr />
+              </>
+            ) : (
+              ''
+            )}
+
+            {second ? (
+              <div>
+                <h5>{dayjs(second[0].startTime).format('ddd[,] MMMM DD')}</h5>
+                {second.map((activity) => {
+                  return (
+                    <div key={activity.id}>
+                      <li className='hover-light-bg p-2 rounded-2'>
+                        <header>{activity.title}</header>
+                        <small className='text-muted'>
+                          {dayjs(activity.startTime).format('D MMM [at] H:mm')}{' '}
+                          • {activity.instructor}
+                        </small>
+                      </li>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              ''
+            )}
+
+            <hr />
+            {third ? (
+              <div>
+                <h5>{dayjs(third[0].startTime).format('ddd[,] MMMM DD')}</h5>
+                {third.map((activity) => {
+                  return (
+                    <div key={activity.id}>
+                      <li className='hover-light-bg p-2 rounded-2'>
+                        <header>{activity.title}</header>
+                        <small className='text-muted'>
+                          {dayjs(activity.startTime).format('D MMM [at] H:mm')}{' '}
+                          • {activity.instructor}
+                        </small>
+                      </li>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              ''
+            )}
+
+            <hr />
           </ul>
 
           <ul className='list-unstyled'>
