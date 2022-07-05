@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+#copy
+/src/App-copy.js
+
 # testing
 /coverage
 

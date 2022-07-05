@@ -1,26 +1,56 @@
-import activities from './resources/schedule.json'
+import activities from "./resources/schedule.json";
+import CurrentWeek from "./components/CurrentWeek";
+import ListedActivities from "./components/ListedActivities";
+import { useMemo } from "react";
 import dayjs from "dayjs";
 
 function App() {
+
+  const sortedSchedule = useMemo(() => {
+    const result = {
+      past: [],
+      today: [],
+      tomorrow: [],
+      currentWeek: [],
+      nextWeek: [],
+      future: [],
+    };
+    activities.forEach((activity) => {
+      var formatedDate = dayjs(activity.startTime);
+      switch (true) {
+        case formatedDate.isBefore(dayjs(), "day"):
+          result.past.push(activity);
+          break;
+        case formatedDate.isSame(dayjs(), "day"):
+          result.today.push(activity);
+          break;
+        case formatedDate.isSame(dayjs().add(1,'day'), "day"):
+          result.tomorrow.push(activity);
+          break;
+        case formatedDate.isSame(dayjs(), "week"):
+          result.currentWeek.push(activity);
+          break;
+        case formatedDate.isSame(dayjs().endOf("week").add(1, "day"), "week"):
+          result.nextWeek.push(activity);
+          break;
+        default:
+          result.future.push(activity);
+          break;
+      }
+    });
+    return result;
+  }, []);
+
   return (
     <div className="container p-3">
       <h1 className="mb-5">Schedule</h1>
-      <div className="row">
-        <div className="col-lg-6 col-md-8">
-          <h2 className="fs-6">Showing all</h2>
-
-          <ol className="list-unstyled">
-            {activities.map((activity) => (
-              <li className="hover-light-bg p-2 rounded-2" key={activity.id}>
-                <header>{activity.title}</header>
-                <small className="text-muted">
-                  {dayjs(activity.startTime).format("D MMM [at] H:mm")} • {activity.instructor}
-                </small>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
+      <ListedActivities title={"Past"} activities={sortedSchedule.past} />
+      <CurrentWeek sortedSchedule={sortedSchedule} />
+      <ListedActivities
+        title={"Next Week"}
+        activities={sortedSchedule.nextWeek}
+      />
+      <ListedActivities title={"Future"} activities={sortedSchedule.future} />
     </div>
   );
 }
