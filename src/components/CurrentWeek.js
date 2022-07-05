@@ -8,7 +8,7 @@ const CurrentWeek = ({ sortedSchedule }) => {
   sortedSchedule.currentWeek.forEach((activity) => {
     var activityDate = dayjs(activity.startTime).toDate();
     dateSet.add(activityDate);
-    return false;
+
   });
 
   return (

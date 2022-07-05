@@ -5,53 +5,41 @@ import { useMemo } from "react";
 import dayjs from "dayjs";
 
 function App() {
-  const today = dayjs().format("MDYYYY");
-  var tomorrow = dayjs().add(1,'day');
-  var remDays = 6 - tomorrow.day();
-  var currentWeekStart = dayjs().add(2,'day');
-  var currentWeekEnd = dayjs().add(remDays+1,'day');
-  var nextWeekStart = currentWeekEnd.add(1,'day');
-  var nextWeekEnd = nextWeekStart.add(6,'day');
 
-  var sortedSchedule = {
-    past: [],
-    today: [],
-    tomorrow: [],
-    currentWeek: [],
-    nextWeek: [],
-    future: [],
-  };
-  var sortSchedule = (activities) => {
+  const sortedSchedule = useMemo(() => {
+    const result = {
+      past: [],
+      today: [],
+      tomorrow: [],
+      currentWeek: [],
+      nextWeek: [],
+      future: [],
+    };
     activities.forEach((activity) => {
-      var formatedDate = dayjs(activity.startTime).format("MDYYYY");
+      var formatedDate = dayjs(activity.startTime);
       switch (true) {
-        case formatedDate < today:
-          sortedSchedule.past.push(activity);
+        case formatedDate.isBefore(dayjs(), "day"):
+          result.past.push(activity);
           break;
-        case formatedDate === today:
-          sortedSchedule.today.push(activity);
+        case formatedDate.isSame(dayjs(), "day"):
+          result.today.push(activity);
           break;
-        case formatedDate === dayjs(tomorrow).format("MDYYYY"):
-          sortedSchedule.tomorrow.push(activity);
+        case formatedDate.isSame(dayjs().add(1,'day'), "day"):
+          result.tomorrow.push(activity);
           break;
-        case formatedDate >= dayjs(currentWeekStart).format("MDYYYY") &&
-          formatedDate <= dayjs(currentWeekEnd).format("MDYYYY"):
-          sortedSchedule.currentWeek.push(activity);
+        case formatedDate.isSame(dayjs(), "week"):
+          result.currentWeek.push(activity);
           break;
-        case formatedDate >= dayjs(nextWeekStart).format("MDYYYY") &&
-          formatedDate <= dayjs(nextWeekEnd).format("MDYYYY"):
-          sortedSchedule.nextWeek.push(activity);
+        case formatedDate.isSame(dayjs().endOf("week").add(1, "day"), "week"):
+          result.nextWeek.push(activity);
           break;
         default:
-          sortedSchedule.future.push(activity);
+          result.future.push(activity);
           break;
       }
-      return false;
     });
-   
-  };
- useMemo(()=>sortSchedule(activities),[activities]);
- console.log();
+    return result;
+  }, []);
 
   return (
     <div className="container p-3">

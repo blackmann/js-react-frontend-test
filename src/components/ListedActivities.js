@@ -23,9 +23,7 @@ const ListedActivities = ({ title, activities }) => {
       </div>
     );
   }
-  else{
-    return <div></div>
-  }
+  return null
 };
 
 export default ListedActivities;

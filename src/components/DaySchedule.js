@@ -23,6 +23,7 @@ const DaySchedule = ({ title, activities }) => {
       </div>
     );
   }
+  return null;
 };
 
 export default DaySchedule;
